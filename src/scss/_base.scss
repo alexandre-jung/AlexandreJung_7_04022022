@@ -4,6 +4,7 @@
 ::before,
 ::after {
   box-sizing: border-box;
+  font-family: $main-font;
 }
 
 html {
@@ -16,7 +17,7 @@ body {
 
 header {
   text-align: center;
-  padding-top: 42px;
+  padding: 42px 0 18px 0;
 }
 
 h1 {
@@ -24,5 +25,5 @@ h1 {
   font-family: $title-font;
   font-weight: 700;
   font-size: 3.6rem;
-  margin: 0 0 17px 0;
+  margin: 0;
 }

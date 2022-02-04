@@ -1,0 +1,23 @@
+@use 'variables' as *;
+
+.search {
+  display: flex;
+  align-items: stretch;
+  border: none;
+  border-radius: 5px;
+  padding-left: 24px;
+  background-color: $lightgray;
+}
+
+.search-input {
+  flex: 1 0 0;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  background: transparent;
+  font-size: 1.8rem;
+}
+
+.input-icon {
+  margin: 18px;
+}
