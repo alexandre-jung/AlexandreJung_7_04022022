@@ -1,0 +1,28 @@
+@use 'variables' as *;
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+header {
+  text-align: center;
+  padding-top: 42px;
+}
+
+h1 {
+  color: #D04F4F;
+  font-family: $title-font;
+  font-weight: 700;
+  font-size: 3.6rem;
+  margin: 0 0 17px 0;
+}
