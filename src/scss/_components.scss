@@ -7,17 +7,97 @@
   border-radius: 5px;
   padding-left: 24px;
   background-color: $lightgray;
+
+  label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    .search-icon {
+      opacity: 0.7;
+      margin: 18px;
+    }
+  }
+
+  &-input {
+    flex: 1 0 0;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background: transparent;
+    font-size: 1.8rem;
+  }
 }
 
-.search-input {
-  flex: 1 0 0;
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 0 5px;
+  margin: 25px -10px 15px;
+  > * {
+    margin: 5px;
+  }
+}
+
+.btn {
   border: none;
+  background: transparent;
   box-shadow: none;
   outline: none;
-  background: transparent;
-  font-size: 1.8rem;
+  border-radius: 5px;
+  padding: 9px 22px;
+  font-size: 1.4rem;
+  color: rgb(20, 20, 20);
+  line-height: 2rem;
+  cursor: pointer;
+
+  &-gray {
+    background-color: $lightgray;
+  }
 }
 
-.input-icon {
-  margin: 18px;
+.filter {
+  font-size: 1.4rem;
+  color: white;
+  border-radius: 5px;
+  padding: 9px 22px;
+  white-space: nowrap;
+  cursor: default;
+
+  &-label {
+    /*
+      Firefox: displaying .filter as a flexbox makes this .filter-label
+      wider than it should be under certain circumstances, so we use this
+      as a workaround for now.
+    */
+    display: inline-flex;
+    transform: translateY(0.1rem);
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  .remove {
+    vertical-align: middle;
+    height: 2rem;
+    padding: 0;
+    margin-left: 13px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    img {
+      height: 100%;
+    }
+  }
+
+  &-red {
+    background-color: #ed6454;
+  }
+  &-green {
+    background-color: #68d9a4;
+  }
+  &-blue {
+    background-color: #3282f7;
+  }
 }

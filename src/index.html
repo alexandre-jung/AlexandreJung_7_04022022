@@ -46,9 +46,22 @@
         <input type="text" name="search" class="search-input" id="search-input" placeholder="Rechercher une recette" />
         <label for="search-input">
           <span class="sr-only">Rechercher une recette</span>
-          <img class="input-icon" src="/assets/img/magnifying-glass.svg" alt="" />
+          <img class="search-icon" src="/assets/img/magnifying-glass.svg" alt="" />
         </label>
       </form>
+
+      <div id="filters" class="filters">
+        <button id="clear-filters" class="btn btn-gray">Effacer</button>
+        
+        <template id="filter-template">
+          <div x:class="class" x:handle="filter">
+            <span x:text="label" x:data-key="key" class="filter-label"></span>
+            <button class="btn remove">
+              <img x:handle="remove" src="/assets/img/clear.svg" alt="Remove" />
+            </button>
+          </div>
+        </template>
+      </div>
 
       <div id="recipes"></div>
     </main>
