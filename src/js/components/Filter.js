@@ -34,26 +34,30 @@ export class FilterList {
 
     this.clearBtn = this.container.querySelector('#clear-filters');
     this.clearBtn.addEventListener('click', this.clear);
+    this.hideClearButton();
   }
 
   add(filter) {
     if (this.filters.has(filter.key)) return;
-    const [filterElement, { filter: filterHandle, remove }] = this.factory.create(filter);
+    const [filterElement, { filter: filterHandle, removeHandle }] = this.factory.create(filter);
     this.container.append(filterElement);
     this.filters.set(filter.key, { ...filter, handle: filterHandle });
-    if (remove) remove.addEventListener('click', () => this.remove(filter.key));
-    if (this.onAdd) this.onAdd(filter.key, this.filters);
+    if (removeHandle) removeHandle.addEventListener('click', () => this.remove(filter.key));
+    this.notifyAdd(filter);
     this.notifyChange();
+    this.showClearButton();
   }
 
   remove(key) {
     const filter = this.filters.get(key);
     filter?.handle.remove();
     this.filters.delete(key);
-    if (!this.filters.size) this.hideClearButton();
-    if (this.onRemove) this.onRemove(filter.key, this.filters);
-    if (!this.filters.size) this.onClear();
+    this.notifyRemove(filter);
     this.notifyChange();
+    if (!this.filters.size) {
+      this.notifyClear();
+      this.hideClearButton();
+    }
   }
 
   clear = () => {
@@ -64,6 +68,14 @@ export class FilterList {
     this.hideClearButton();
     this.notifyChange();
   };
+
+  notifyAdd(filter) {
+    if (this.onAdd) this.onAdd(filter, this.filters);
+  }
+
+  notifyRemove(filter) {
+    if (this.onRemove) this.onRemove(filter, this.filters);
+  }
 
   notifyChange() {
     if (this.onChange) this.onChange(this.filters);
