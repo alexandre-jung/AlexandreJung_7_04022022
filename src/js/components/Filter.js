@@ -6,10 +6,9 @@ export class FilterFactory {
     this.template = new Template(filterTemplate.content);
   }
 
-  create({ key, label, color }) {
+  create({ color, ...otherProps }) {
     return this.template.render({
-      key,
-      label,
+      ...otherProps,
       class: `filter filter-${color}`,
     });
   }
@@ -38,20 +37,20 @@ export class FilterList {
   }
 
   add(filter) {
-    if (this.filters.has(filter.key)) return;
+    if (this.filters.has(filter.id)) return;
     const [filterElement, { filter: filterHandle, removeHandle }] = this.factory.create(filter);
     this.container.append(filterElement);
-    this.filters.set(filter.key, { ...filter, handle: filterHandle });
-    if (removeHandle) removeHandle.addEventListener('click', () => this.remove(filter.key));
+    this.filters.set(filter.id, { ...filter, handle: filterHandle });
+    if (removeHandle) removeHandle.addEventListener('click', () => this.remove(filter.id));
     this.notifyAdd(filter);
     this.notifyChange();
     this.showClearButton();
   }
 
-  remove(key) {
-    const filter = this.filters.get(key);
+  remove(id) {
+    const filter = this.filters.get(id);
     filter?.handle.remove();
-    this.filters.delete(key);
+    this.filters.delete(id);
     this.notifyRemove(filter);
     this.notifyChange();
     if (!this.filters.size) {
