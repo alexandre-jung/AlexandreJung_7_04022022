@@ -118,7 +118,34 @@
         <span class="item" x:text="label" x:data-key="key" x:handle="handle" x:title="label"></span>
       </template>
 
-      <div id="recipes"></div>
+      <div id="recipes" class="recipes"></div>
+
+      <template id="recipe-template">
+        <div class="recipe">
+          <div class="recipe-body">
+            <div class="recipe-header">
+              <h2 x:text="name"></h2>
+              <div class="recipe-time">
+                <img src="/assets/img/stopwatch.svg" alt="" />
+                <span class="recipe-time-value" x:text="time"></span>
+              </div>
+            </div>
+            <div class="recipe-description">
+              <div class="recipe-ingredients" x:handle="ingredientsHandle"></div>
+              <div class="recipe-steps">
+                <div class="line-clamp" x:text="description"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template id="recipe-ingredient-template">
+        <span class="ingredient" x:handle="handle">
+          <span class="ingredient-name" x:text="ingredient"></span>
+          <span class="ingredient-quantity" x:text="quantity"></span>
+        </span>
+      </template>
     </main>
 
     <script type="module" src="/index.js"></script>

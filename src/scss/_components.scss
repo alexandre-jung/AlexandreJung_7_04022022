@@ -174,9 +174,7 @@
     color: white;
 
     .item {
-      // display: inline-block;
       min-width: 15rem;
-      // width: 31%;
       white-space: nowrap;
       flex: 0 0 33%;
       padding: 5px;
@@ -185,5 +183,98 @@
       text-overflow: ellipsis;
       cursor: pointer;
     }
+  }
+}
+
+.recipes {
+  margin-top: 25px;
+}
+
+.recipe {
+  flex: 0 0 380px;
+  height: 370px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #c7bebe;
+  position: relative;
+  &-body {
+    margin-top: auto;
+    height: 240px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    background: #e7e7e7;
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  &-header {
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    vertical-align: middle;
+    * {
+      display: inline-block;
+      margin: 0;
+      font-size: inherit;
+    }
+  }
+  &-time {
+    font-weight: bold;
+    white-space: nowrap;
+    margin-left: 30px;
+    position: relative;
+    img {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -20px;
+    }
+    &-value {
+      margin-left: 5px;
+      &::after {
+        content: ' min';
+      }
+    }
+  }
+  &-description {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    overflow: hidden;
+    * {
+      flex: 1 0 0;
+    }
+  }
+  &-ingredients {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    .ingredient {
+      flex: 0 0;
+      + .ingredient {
+        margin-top: 2px;
+      }
+      &-name {
+        font-weight: bold;
+        &::after {
+          content: ':';
+          display: none;
+        }
+      }
+      &.has-quantity {
+        ::after {
+          display: inline;
+        }
+      }
+    }
+  }
+  &-steps {
+    font-family: $body-font;
+    flex: 1 0 40px;
+    margin-left: 20px;
   }
 }

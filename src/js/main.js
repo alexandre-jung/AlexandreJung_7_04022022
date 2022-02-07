@@ -1,6 +1,7 @@
 import SearchBar from 'js/components/SearchBar';
 import { Filter, FilterList } from 'js/components/Filter';
 import Dropdown from 'js/components/dropdown';
+import RecipeList from 'js/components/Recipes';
 import { getAllIngredients, getAllAppliances, getAllUtensils } from 'js/api';
 
 const search = new SearchBar();
@@ -42,3 +43,5 @@ utensilsDropdown.fill(
 ingredientsDropdown.onClick = (item) => filterList.add({ ...item, color: Filter.blue });
 appliancesDropdown.onClick = (item) => filterList.add({ ...item, color: Filter.green });
 utensilsDropdown.onClick = (item) => filterList.add({ ...item, color: Filter.red });
+
+const recipeList = new RecipeList();
