@@ -1,4 +1,4 @@
-import Template from 'js/utils/Template';
+import Template from 'js/utils/template';
 
 export default class Dropdown {
   onClick = null;
@@ -30,7 +30,7 @@ export default class Dropdown {
     // Catch mousedown events because it occurs before blur, unlike click.
     this.itemList.addEventListener('mousedown', (ev) => {
       if (ev.button == 0 && ev.target.classList.contains('item') && this.onClick) {
-        this.onClick(this.itemsMap.get(ev.target.dataset.key));
+        this.onClick(this.itemsMap.get(ev.target.dataset.id));
       }
     });
 
@@ -47,7 +47,7 @@ export default class Dropdown {
     const [itemElement, { handle }] = this.template.render(item);
     this.itemList.append(itemElement);
     this.items.push({ ...item, handle });
-    this.itemsMap.set(item.key, item);
+    this.itemsMap.set(item.id, item);
   }
 
   fill(items) {

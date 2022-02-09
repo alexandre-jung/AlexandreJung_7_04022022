@@ -72,12 +72,14 @@
             id="ingredient-search-input"
             placeholder="Rechercher un ingrédient"
             value="Ingrédients"
+            tabindex="0"
           />
-          <button class="btn">
-            <img src="/assets/img/arrow-down.svg" alt="" />
+          <button class="btn" tabindex="-1">
+            <img src="/assets/img/arrow-down.svg" class="dropdown-arrow" alt="" />
           </button>
         </div>
-        <div class="list"></div>
+        <!-- Firefox 97.0 on Windows 10 gives focus to overflowing div. -->
+        <div class="list" tabindex="-1"></div>
       </div>
 
       <div class="dropdown dropdown-green" id="appliances-dropdown">
@@ -89,12 +91,14 @@
             id="appliance-search-input"
             placeholder="Rechercher un appareil"
             value="Appareils"
+            tabindex="0"
           />
-          <button class="btn">
-            <img src="/assets/img/arrow-down.svg" alt="" />
+          <button class="btn" tabindex="-1">
+            <img src="/assets/img/arrow-down.svg" class="dropdown-arrow" alt="" />
           </button>
         </div>
-        <div class="list"></div>
+        <!-- Firefox 97.0 on Windows 10 gives focus to overflowing div. -->
+        <div class="list" tabindex="-1"></div>
       </div>
 
       <div class="dropdown dropdown-red" id="utensils-dropdown">
@@ -106,22 +110,24 @@
             id="utensils-search-input"
             placeholder="Rechercher un ustensile"
             value="Ustensiles"
+            tabindex="0"
           />
-          <button class="btn">
-            <img src="/assets/img/arrow-down.svg" alt="" />
+          <button class="btn" tabindex="-1">
+            <img src="/assets/img/arrow-down.svg" class="dropdown-arrow" alt="" />
           </button>
         </div>
-        <div class="list"></div>
+        <!-- Firefox 97.0 on Windows 10 gives focus to overflowing div. -->
+        <div class="list" tabindex="-1"></div>
       </div>
 
       <template id="dropdown-item-template">
-        <span class="item" x:text="label" x:data-key="key" x:handle="handle" x:title="label"></span>
+        <span class="item" x:text="label" x:data-id="id" x:handle="handle" x:title="label"></span>
       </template>
 
       <div id="recipes" class="recipes"></div>
 
       <template id="recipe-template">
-        <div class="recipe">
+        <div class="recipe" x:data-id="id">
           <div class="recipe-body">
             <div class="recipe-header">
               <h2 x:text="name"></h2>

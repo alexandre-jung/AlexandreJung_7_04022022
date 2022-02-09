@@ -1,6 +1,6 @@
 import SearchBar from 'js/components/SearchBar';
 import { Filter, FilterList } from 'js/components/Filter';
-import Dropdown from 'js/components/dropdown';
+import Dropdown from 'js/components/Dropdown';
 import RecipeList from 'js/components/Recipes';
 import { getKeywords } from 'js/api';
 import recipes from 'mock/recipes';
@@ -34,4 +34,5 @@ ingredientsDropdown.onClick = (item) => filterList.add({ ...item, color: Filter.
 appliancesDropdown.onClick = (item) => filterList.add({ ...item, color: Filter.green });
 utensilsDropdown.onClick = (item) => filterList.add({ ...item, color: Filter.red });
 
-const recipeList = new RecipeList();
+const recipeList = new RecipeList(recipes);
+recipeList.filterByIds([8, 44, 15]);

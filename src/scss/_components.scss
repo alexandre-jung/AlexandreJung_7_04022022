@@ -158,6 +158,9 @@
       display: flex;
       min-width: 40rem;
     }
+    .dropdown-arrow {
+      transform: rotate(180deg);
+    }
   }
 
   .list {

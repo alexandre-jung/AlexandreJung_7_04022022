@@ -1,17 +1,16 @@
 import Template from 'js/utils/template';
-import recipes from 'mock/recipes';
 
 export default class RecipeList {
-  constructor() {
+  constructor(recipes) {
     const recipeTemplate = new Template(document.querySelector('#recipe-template').content);
     const ingredientTemplate = new Template(document.querySelector('#recipe-ingredient-template').content);
-    const recipeContainer = document.querySelector('#recipes');
+    this.recipeContainer = document.querySelector('#recipes');
 
     recipes.sort(({ name: nameA }, { name: nameB }) => nameA.localeCompare(nameB));
 
     recipes.forEach((recipe) => {
       const [recipeElement, { ingredientsHandle }] = recipeTemplate.render(recipe);
-      recipeContainer.append(recipeElement);
+      this.recipeContainer.append(recipeElement);
       recipe.ingredients.forEach(({ ingredient, quantity, unit }) => {
         const [ingredientElement, { handle }] = ingredientTemplate.render({
           ingredient,
@@ -21,5 +20,15 @@ export default class RecipeList {
         ingredientsHandle.append(ingredientElement);
       });
     });
+  }
+
+  filterByIds = (ids) => {
+    for (const recipe of this.recipeContainer.children) {
+      if (ids.includes(Number(recipe.dataset.id))) {
+        recipe.classList.remove('hidden');
+      } else {
+        recipe.classList.add('hidden');
+      }
+    }
   }
 }

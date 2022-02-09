@@ -5,17 +5,7 @@
 }
 
 #recipes {
-  display: flex;
-  flex-flow: row wrap;
-  > * {
-    // Left margin on all elements except the first of each row.
-    margin-left: 50px;
-    &:nth-child(3n + 1) {
-      margin-left: 0;
-    }
-    // Top margin on all elements except the 3 first ones.
-    &:nth-child(1n + 4) {
-      margin-top: 50px;
-    }
-  }
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
 }
