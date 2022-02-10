@@ -1,10 +1,19 @@
 import path from 'path';
 
 const root = 'src';
-const outDir = path.resolve(`${root}/..`, 'dist');
+
+// Root subdirectories.
 const js = path.resolve(root, 'js');
 const mock = path.resolve(root, 'mock');
 const styles = path.resolve(root, 'scss');
+
+// Javascript subdirectories.
+const api = path.resolve(js, 'api');
+const components = path.resolve(js, 'components');
+const utils = path.resolve(js, 'utils');
+
+// Build directory.
+const outDir = path.resolve(`${root}/..`, 'dist');
 
 export default {
   root,
@@ -12,9 +21,12 @@ export default {
   resolve: {
     alias: {
       '@': root,
-      js,
       mock,
       styles,
+      js,
+      api,
+      components,
+      utils,
     },
   },
 };
