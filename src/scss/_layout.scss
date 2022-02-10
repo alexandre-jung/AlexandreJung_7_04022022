@@ -4,8 +4,14 @@
   padding: 0 10px;
 }
 
+#dropdowns {
+  position: absolute;
+  z-index: 1;
+}
+
 #recipes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 50px;
+  margin-top: 110px;
 }

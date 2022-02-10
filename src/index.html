@@ -55,7 +55,7 @@
 
         <template id="filter-template">
           <div x:class="class" x:handle="filter">
-            <span x:text="label" x:data-key="key" class="filter-label"></span>
+            <span x:text="label" x:data-key="key" x:data-id="id" class="filter-label"></span>
             <button class="btn remove">
               <img x:handle="removeHandle" src="/assets/img/clear.svg" alt="Remove" />
             </button>
@@ -63,61 +63,61 @@
         </template>
       </div>
 
-      <div class="dropdown dropdown-blue" id="ingredients-dropdown">
-        <div class="dropdown-search">
-          <input
-            size="12"
-            class="dropdown-search-input"
-            type="text"
-            id="ingredient-search-input"
-            placeholder="Rechercher un ingrédient"
-            value="Ingrédients"
-            tabindex="0"
-          />
-          <button class="btn" tabindex="-1">
-            <img src="/assets/img/arrow-down.svg" class="dropdown-arrow" alt="" />
-          </button>
+      <div id="dropdowns">
+        <div class="dropdown dropdown-blue" id="ingredients-dropdown">
+          <div class="dropdown-search">
+            <input
+              size="12"
+              class="dropdown-search-input"
+              type="text"
+              id="ingredient-search-input"
+              placeholder="Rechercher un ingrédient"
+              value="Ingrédients"
+              tabindex="0"
+            />
+            <button class="btn" tabindex="-1">
+              <img src="/assets/img/arrow-down.svg" class="dropdown-arrow" alt="" />
+            </button>
+          </div>
+          <!-- Firefox 97.0 on Windows 10 gives focus to overflowing div. -->
+          <div class="list" tabindex="-1"></div>
         </div>
-        <!-- Firefox 97.0 on Windows 10 gives focus to overflowing div. -->
-        <div class="list" tabindex="-1"></div>
-      </div>
-
-      <div class="dropdown dropdown-green" id="appliances-dropdown">
-        <div class="dropdown-search">
-          <input
-            size="12"
-            class="dropdown-search-input"
-            type="text"
-            id="appliance-search-input"
-            placeholder="Rechercher un appareil"
-            value="Appareils"
-            tabindex="0"
-          />
-          <button class="btn" tabindex="-1">
-            <img src="/assets/img/arrow-down.svg" class="dropdown-arrow" alt="" />
-          </button>
+        <div class="dropdown dropdown-green" id="appliances-dropdown">
+          <div class="dropdown-search">
+            <input
+              size="12"
+              class="dropdown-search-input"
+              type="text"
+              id="appliance-search-input"
+              placeholder="Rechercher un appareil"
+              value="Appareils"
+              tabindex="0"
+            />
+            <button class="btn" tabindex="-1">
+              <img src="/assets/img/arrow-down.svg" class="dropdown-arrow" alt="" />
+            </button>
+          </div>
+          <!-- Firefox 97.0 on Windows 10 gives focus to overflowing div. -->
+          <div class="list" tabindex="-1"></div>
         </div>
-        <!-- Firefox 97.0 on Windows 10 gives focus to overflowing div. -->
-        <div class="list" tabindex="-1"></div>
-      </div>
-
-      <div class="dropdown dropdown-red" id="utensils-dropdown">
-        <div class="dropdown-search">
-          <input
-            size="12"
-            class="dropdown-search-input"
-            type="text"
-            id="utensils-search-input"
-            placeholder="Rechercher un ustensile"
-            value="Ustensiles"
-            tabindex="0"
-          />
-          <button class="btn" tabindex="-1">
-            <img src="/assets/img/arrow-down.svg" class="dropdown-arrow" alt="" />
-          </button>
+        <div class="dropdown dropdown-red" id="utensils-dropdown">
+          <div class="dropdown-search">
+            <input
+              size="12"
+              class="dropdown-search-input"
+              type="text"
+              id="utensils-search-input"
+              placeholder="Rechercher un ustensile"
+              value="Ustensiles"
+              tabindex="0"
+            />
+            <button class="btn" tabindex="-1">
+              <img src="/assets/img/arrow-down.svg" class="dropdown-arrow" alt="" />
+            </button>
+          </div>
+          <!-- Firefox 97.0 on Windows 10 gives focus to overflowing div. -->
+          <div class="list" tabindex="-1"></div>
         </div>
-        <!-- Firefox 97.0 on Windows 10 gives focus to overflowing div. -->
-        <div class="list" tabindex="-1"></div>
       </div>
 
       <template id="dropdown-item-template">

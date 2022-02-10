@@ -1,5 +1,5 @@
-import Template from 'js/utils/template';
-import { makeKey } from 'js/utils/string';
+import Template from 'utils/template';
+import { makeKey } from 'utils/string';
 
 export default class Dropdown {
   onClick = null;
@@ -13,6 +13,7 @@ export default class Dropdown {
     this.template = new Template(document.querySelector('#dropdown-item-template').content);
     this.items = [];
     this.itemsMap = new Map();
+    this.filterIds = null;
     this.setupEvents();
   }
 
@@ -20,6 +21,7 @@ export default class Dropdown {
     this.searchInput.addEventListener('focus', () => {
       this.searchInput.closest('.dropdown').classList.add('expanded');
       this.searchInput.value = '';
+      this.itemList.scroll({ top: 0 });
     });
 
     this.searchInput.addEventListener('blur', () => {
@@ -33,6 +35,8 @@ export default class Dropdown {
       if (ev.button == 0 && ev.target.classList.contains('item') && this.onClick) {
         this.onClick(this.itemsMap.get(ev.target.dataset.id));
       }
+      // Allow right-click on item list.
+      else ev.preventDefault();
     });
 
     this.searchInput.addEventListener('input', this.filterByInputValue);
@@ -53,7 +57,8 @@ export default class Dropdown {
 
   showAll() {
     this.items.forEach((item) => {
-      item.handle.style.display = 'inline';
+      if (this.filterIds?.includes(item.id) ?? true) item.handle.style.display = 'inline';
+      else item.handle.style.display = 'none';
     });
   }
 
@@ -62,14 +67,15 @@ export default class Dropdown {
     const words = value.split(' ');
 
     this.items.forEach((item) => {
-      // Find out wether every typed word matches the current item.
-      // Ignore case and accents.
+      // Find out wether every typed word matches
+      // the current item, ignoring case and accents.
       const it = words.values();
       let nextWord = it.next();
       let match = true;
+
       while (!nextWord.done && match) {
         const word = makeKey(nextWord.value);
-        if (!item.key.includes(word)) match = false;
+        if ((this.filterIds && !this.filterIds.includes(item.id)) || !item.key.includes(word)) match = false;
         nextWord = it.next();
       }
 
@@ -78,4 +84,18 @@ export default class Dropdown {
       else item.handle.style.display = 'none';
     });
   };
+
+  /**
+   * Show only items that are in itemList.
+   * It persists and also affects the showAll() reset method.
+   * Pass null to reset filtering.
+   */
+  filterEntries(itemList) {
+    this.filterIds = itemList?.map((item) => item.id) ?? null;
+
+    this.items.forEach((item) => {
+      if (this.filterIds?.includes(item.id) ?? true) item.handle.style.display = 'inline';
+      else item.handle.style.display = 'none';
+    });
+  }
 }

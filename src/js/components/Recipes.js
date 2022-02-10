@@ -1,10 +1,14 @@
-import Template from 'js/utils/template';
+import Template from 'utils/template';
 
 export default class RecipeList {
+  onChange = null;
+
   constructor(recipes) {
     const recipeTemplate = new Template(document.querySelector('#recipe-template').content);
     const ingredientTemplate = new Template(document.querySelector('#recipe-ingredient-template').content);
     this.recipeContainer = document.querySelector('#recipes');
+    this.allRecipesMap = new Map();
+    this._filteredRecipes = new Set();
 
     recipes.sort(({ name: nameA }, { name: nameB }) => nameA.localeCompare(nameB));
 
@@ -19,16 +23,40 @@ export default class RecipeList {
         if (quantity) handle.classList.add('has-quantity');
         ingredientsHandle.append(ingredientElement);
       });
+      this._filteredRecipes.add(recipe.id);
+      this.allRecipesMap.set(recipe.id, recipe);
     });
   }
 
   filterByIds = (ids) => {
+    let updated = false;
     for (const recipe of this.recipeContainer.children) {
       if (ids.includes(Number(recipe.dataset.id))) {
+        updated = updated || recipe.classList.contains('hidden');
         recipe.classList.remove('hidden');
+        this._filteredRecipes.add(Number(recipe.dataset.id));
       } else {
+        updated = updated || !recipe.classList.contains('hidden');
         recipe.classList.add('hidden');
+        this._filteredRecipes.delete(Number(recipe.dataset.id));
       }
     }
+    if (this.onChange && updated) this.onChange(this.filteredRecipes);
+  };
+
+  clearFilter() {
+    for (const recipe of this.recipeContainer.children) {
+      recipe.classList.remove('hidden');
+      this._filteredRecipes.add(Number(recipe.dataset.id));
+    }
+  }
+
+  /**
+   * Get displayed recipes.
+   */
+  get filteredRecipes() {
+    return Array.from(this.allRecipesMap)
+      .filter(([id, _]) => this._filteredRecipes.has(id))
+      .map(([_, recipe]) => recipe);
   }
 }

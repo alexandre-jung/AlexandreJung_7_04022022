@@ -1,4 +1,4 @@
-import { makeKey, capitalize } from 'js/utils/string';
+import { makeKey, capitalize } from 'utils/string';
 
 export const KEYWORD_TYPES = Object.freeze({
   ingredient: 'ingredient',

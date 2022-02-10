@@ -1,4 +1,4 @@
-import Template from 'js/utils/template';
+import Template from 'utils/template';
 
 export class FilterFactory {
   constructor() {
@@ -90,5 +90,14 @@ export class FilterList {
 
   hideClearButton() {
     if (this.clearBtn) this.clearBtn.style.display = 'none';
+  }
+
+  fadeUnusedFilters(filterList) {
+    const filterIds = filterList?.map((item) => item.id) ?? null;
+    this.filters.forEach(filter => {
+      if (filterIds.includes(filter.id))
+        filter.handle.classList.remove('faded');
+      else filter.handle.classList.add('faded');
+    });
   }
 }
