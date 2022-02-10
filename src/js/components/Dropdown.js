@@ -1,4 +1,5 @@
 import Template from 'js/utils/template';
+import { makeKey } from 'js/utils/string';
 
 export default class Dropdown {
   onClick = null;
@@ -34,13 +35,7 @@ export default class Dropdown {
       }
     });
 
-    this.searchInput.addEventListener('input', () => {
-      const value = this.searchInput.value;
-      this.items.forEach((item) => {
-        if (item.key.includes(value)) item.handle.style.display = 'inline';
-        else item.handle.style.display = 'none';
-      });
-    });
+    this.searchInput.addEventListener('input', this.filterByInputValue);
   }
 
   add(item) {
@@ -61,4 +56,26 @@ export default class Dropdown {
       item.handle.style.display = 'inline';
     });
   }
+
+  filterByInputValue = () => {
+    const value = this.searchInput.value;
+    const words = value.split(' ');
+
+    this.items.forEach((item) => {
+      // Find out wether every typed word matches the current item.
+      // Ignore case and accents.
+      const it = words.values();
+      let nextWord = it.next();
+      let match = true;
+      while (!nextWord.done && match) {
+        const word = makeKey(nextWord.value);
+        if (!item.key.includes(word)) match = false;
+        nextWord = it.next();
+      }
+
+      // Display items that matches.
+      if (match) item.handle.style.display = 'inline';
+      else item.handle.style.display = 'none';
+    });
+  };
 }
