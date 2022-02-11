@@ -54,7 +54,7 @@ export default class RecipeList {
    */
   get filteredRecipes() {
     return Array.from(this.allRecipesMap)
-      .filter(([id, _]) => this._filteredRecipes.has(id))
-      .map(([_, recipe]) => recipe);
+      .filter(([id]) => this._filteredRecipes.has(id))
+      .map(([, recipe]) => recipe);
   }
 }

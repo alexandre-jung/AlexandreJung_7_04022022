@@ -19,7 +19,7 @@ export default class SearchBar {
       if (eventValue != this.previousValue) {
         fn(eventValue);
         this.previousValue = eventValue;
-      };
+      }
     };
     this.searchInput.addEventListener('input', this._onChange);
   }

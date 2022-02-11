@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 export default {
   /**
    * Initialize the search algorithm.
@@ -24,3 +26,5 @@ export default {
     // TODO write search algorithm here.
   },
 };
+
+/* eslint-enable no-unused-vars */
