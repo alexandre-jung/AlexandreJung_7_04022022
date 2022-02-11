@@ -1,9 +1,9 @@
-export function removeAccents(str) {
+export function removeDiacritics(str) {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
-export function makeKey(str) {
-  return removeAccents(str).toLocaleLowerCase().replace(/ /g, '_');
+export function slugify(str, separator = '_') {
+  return removeDiacritics(str).toLocaleLowerCase().replace(/ /g, separator);
 }
 
 export function capitalize(str) {

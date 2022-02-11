@@ -11,6 +11,7 @@ const styles = path.resolve(root, 'scss');
 const api = path.resolve(js, 'api');
 const components = path.resolve(js, 'components');
 const utils = path.resolve(js, 'utils');
+const lib = path.resolve(js, 'lib');
 
 // Build directory.
 const outDir = path.resolve(`${root}/..`, 'dist');
@@ -27,6 +28,7 @@ export default {
       api,
       components,
       utils,
+      lib,
     },
   },
 };

@@ -1,5 +1,5 @@
 import Template from 'utils/template';
-import { makeKey } from 'utils/string';
+import { slugify } from 'utils/string';
 
 export default class Dropdown {
   onClick = null;
@@ -74,7 +74,7 @@ export default class Dropdown {
       let match = true;
 
       while (!nextWord.done && match) {
-        const word = makeKey(nextWord.value);
+        const word = slugify(nextWord.value);
         if ((this.filterIds && !this.filterIds.includes(item.id)) || !item.key.includes(word)) match = false;
         nextWord = it.next();
       }

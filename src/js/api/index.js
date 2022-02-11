@@ -1,9 +1,9 @@
-import { makeKey, capitalize } from 'utils/string';
+import { slugify, capitalize } from 'utils/string';
 
 export const KEYWORD_TYPES = Object.freeze({
-  ingredient: 'ingredient',
-  appliance: 'appliance',
-  utensil: 'utensil',
+  ingredient: 'ingredients',
+  appliance: 'appliances',
+  utensil: 'utensils',
 });
 
 export function getAllIngredients(recipes) {
@@ -11,8 +11,8 @@ export function getAllIngredients(recipes) {
   const result = [];
   recipes.forEach((recipe) => {
     recipe.ingredients.forEach(({ ingredient }) => {
-      const key = makeKey(ingredient);
-      const id = `ingredient.${key}`;
+      const key = slugify(ingredient);
+      const id = `${KEYWORD_TYPES.ingredient}.${key}`;
       if (addedKeywordIds.has(id)) return;
       result.push({
         id,
@@ -30,8 +30,8 @@ export function getAllAppliances(recipes) {
   const addedKeywordIds = new Set();
   const result = [];
   recipes.forEach(({ appliance }) => {
-    const key = makeKey(appliance);
-    const id = `appliance.${key}`;
+    const key = slugify(appliance);
+    const id = `${KEYWORD_TYPES.appliance}.${key}`;
     if (addedKeywordIds.has(id)) return;
     result.push({
       id,
@@ -49,8 +49,8 @@ export function getAllUtensils(recipes) {
   const result = [];
   recipes.forEach((recipe) => {
     recipe.utensils.forEach((utensil) => {
-      const key = makeKey(utensil);
-      const id = `utensil.${key}`;
+      const key = slugify(utensil);
+      const id = `${KEYWORD_TYPES.utensil}.${key}`;
       if (addedKeywordIds.has(id)) return;
       result.push({
         id,

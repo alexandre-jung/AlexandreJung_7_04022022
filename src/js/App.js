@@ -5,6 +5,8 @@ import RecipeList from 'components/Recipes';
 import { getKeywords } from 'api';
 import { arraysEqual } from 'utils/array';
 import recipes from 'mock/recipes';
+import Search from 'lib/search';
+import { KEYWORD_TYPES } from 'api';
 
 export default class App {
   constructor() {
@@ -13,6 +15,9 @@ export default class App {
 
     this.currentSearchWords = App.searchStringToArray(this.mainSearch.value);
     this.currentKeywords = [];
+
+    // Initialize search algorithm.
+    Search.init(recipes);
 
     // Update search.
     this.previousSearchWords = [];
@@ -84,10 +89,16 @@ export default class App {
    * Handle filters changes.
    */
   updateRecipesByKeywords = (keywordsMap) => {
-    const keywords = Array.from(keywordsMap.values()).map(({ key, type }) => ({
-      key,
-      type,
-    }));
+    let keywords = {
+      [KEYWORD_TYPES.ingredient]: [],
+      [KEYWORD_TYPES.appliance]: [],
+      [KEYWORD_TYPES.utensil]: [],
+    };
+    Array.from(keywordsMap.values()).reduce((accumulator, { key, type }) => {
+      accumulator[type].push(key);
+      return accumulator;
+    }, keywords);
+
     console.log(`Filter by '${keywords}'`, keywords);
     this.currentKeywords = keywords;
     this.applySearch();
@@ -100,7 +111,7 @@ export default class App {
     console.log('filteredRecipes', filteredRecipes);
     // Get all keywords from currently displayed recipes.
     const { ingredients, appliances, utensils } = getKeywords(filteredRecipes);
-    const allKeywords = [...ingredients, ...appliances, ...utensils];
+    const filterRecipesKeywords = [...ingredients, ...appliances, ...utensils];
 
     // Update filter dropdowns.
     this.ingredientsDropdown.filterEntries(ingredients);
@@ -108,7 +119,7 @@ export default class App {
     this.utensilsDropdown.filterEntries(utensils);
 
     // Fade unused filters.
-    this.filterList.fadeUnusedFilters(allKeywords);
+    this.filterList.fadeUnusedFilters(filterRecipesKeywords);
   };
 
   /**
@@ -126,6 +137,14 @@ export default class App {
      *
      * Return nothing.
      */
+    const recipeIds = Search.search(
+      recipes,
+      this.recipeList.filteredRecipes,
+      this.currentSearchWords,
+      this.currentKeywords
+    );
+    if (Array.isArray(recipeIds)) this.recipeList.filterByIds(recipeIds);
+    else this.recipeList.clearFilter();
   }
 
   static searchStringToArray(str) {

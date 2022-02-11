@@ -10,8 +10,6 @@ export default class RecipeList {
     this.allRecipesMap = new Map();
     this._filteredRecipes = new Set();
 
-    recipes.sort(({ name: nameA }, { name: nameB }) => nameA.localeCompare(nameB));
-
     recipes.forEach((recipe) => {
       const [recipeElement, { ingredientsHandle }] = recipeTemplate.render(recipe);
       this.recipeContainer.append(recipeElement);

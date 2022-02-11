@@ -1776,4 +1776,6 @@ const recipes = [
   },
 ];
 
+recipes.sort(({ name: nameA }, { name: nameB }) => nameA.localeCompare(nameB));
+
 export default recipes;
