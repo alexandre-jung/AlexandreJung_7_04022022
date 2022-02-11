@@ -4,4 +4,6 @@
  */
 
 import 'styles/main.scss';
-import 'js/main.js';
+import App from 'js/App';
+
+new App();
