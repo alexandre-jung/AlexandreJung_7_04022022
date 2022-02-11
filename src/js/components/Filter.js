@@ -21,10 +21,7 @@ export const Filter = Object.freeze({
 });
 
 export class FilterList {
-  onAdd = null;
-  onRemove = null;
   onChange = null;
-  onClear = null;
 
   constructor() {
     this.filters = new Map();
@@ -42,7 +39,6 @@ export class FilterList {
     this.container.append(filterElement);
     this.filters.set(filter.id, { ...filter, handle: filterHandle });
     if (removeHandle) removeHandle.addEventListener('click', () => this.remove(filter.id));
-    this.notifyAdd(filter);
     this.notifyChange();
     this.showClearButton();
   }
@@ -51,37 +47,20 @@ export class FilterList {
     const filter = this.filters.get(id);
     filter?.handle.remove();
     this.filters.delete(id);
-    this.notifyRemove(filter);
     this.notifyChange();
-    if (!this.filters.size) {
-      this.notifyClear();
-      this.hideClearButton();
-    }
+    if (!this.filters.size) this.hideClearButton();
   }
 
   clear = () => {
     if (!this.filters.size) return;
     this.filters.forEach((filter) => filter.handle.remove());
     this.filters.clear();
-    this.notifyClear();
     this.hideClearButton();
     this.notifyChange();
   };
 
-  notifyAdd(filter) {
-    if (this.onAdd) this.onAdd(filter, this.filters);
-  }
-
-  notifyRemove(filter) {
-    if (this.onRemove) this.onRemove(filter, this.filters);
-  }
-
   notifyChange() {
     if (this.onChange) this.onChange(this.filters);
-  }
-
-  notifyClear() {
-    if (this.onClear) this.onClear();
   }
 
   showClearButton() {

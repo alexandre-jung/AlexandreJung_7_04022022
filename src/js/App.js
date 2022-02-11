@@ -3,12 +3,21 @@ import { Filter, FilterList } from 'components/Filter';
 import Dropdown from 'components/Dropdown';
 import RecipeList from 'components/Recipes';
 import { getKeywords } from 'api';
+import { arraysEqual } from 'utils/array';
 import recipes from 'mock/recipes';
 
 export default class App {
   constructor() {
     this.setupUI();
     this.setupEvents();
+
+    this.currentSearchWords = App.searchStringToArray(this.mainSearch.value);
+    this.currentKeywords = [];
+
+    // Update search.
+    this.previousSearchWords = [];
+    this.updateRecipesByMainSearch(this.mainSearch.value);
+    this.previousSearchWords = this.currentSearchWords;
   }
 
   /**
@@ -63,21 +72,32 @@ export default class App {
    * Handle main search bar changes.
    */
   updateRecipesByMainSearch = (value) => {
-    console.log(`Search by '${value}'`);
+    this.currentSearchWords = App.searchStringToArray(value);
+    if (!arraysEqual(this.currentSearchWords, this.previousSearchWords)) {
+      console.log(`Search by '${value}'`, this.currentSearchWords);
+      this.previousSearchWords = this.currentSearchWords;
+      this.applySearch();
+    }
   };
 
   /**
    * Handle filters changes.
    */
   updateRecipesByKeywords = (keywordsMap) => {
-    const keywords = Array.from(keywordsMap.values()).map((filter) => filter.key);
-    console.log(`Filter by '${keywords}'`);
+    const keywords = Array.from(keywordsMap.values()).map(({ key, type }) => ({
+      key,
+      type,
+    }));
+    console.log(`Filter by '${keywords}'`, keywords);
+    this.currentKeywords = keywords;
+    this.applySearch();
   };
 
   /**
    * Update filters and dropdowns to match displayed recipes data.
    */
   updateFilters = (filteredRecipes) => {
+    console.log('filteredRecipes', filteredRecipes);
     // Get all keywords from currently displayed recipes.
     const { ingredients, appliances, utensils } = getKeywords(filteredRecipes);
     const allKeywords = [...ingredients, ...appliances, ...utensils];
@@ -90,4 +110,25 @@ export default class App {
     // Fade unused filters.
     this.filterList.fadeUnusedFilters(allKeywords);
   };
+
+  /**
+   * Run the search algorithm, then display valid recipes.
+   */
+  applySearch() {
+    /**
+     * Run search algorithm to get IDs of recipes to display using:
+     * - this.currentSearchWords
+     * - this.currentKeywords
+     *
+     * Then either filter recipes or reset filters with:
+     * - this.recipeList.filterByIds([...ids]);
+     * - this.recipeList.clearFilter()
+     *
+     * Return nothing.
+     */
+  }
+
+  static searchStringToArray(str) {
+    return str.split(' ').filter((v) => v);
+  }
 }
