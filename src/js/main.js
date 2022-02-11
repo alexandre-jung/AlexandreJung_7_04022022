@@ -5,7 +5,7 @@ import RecipeList from 'components/Recipes';
 import { getKeywords } from 'api';
 import recipes from 'mock/recipes';
 
-const mainSearch = new SearchBar();
+const mainSearch = new SearchBar(3);
 const filterList = new FilterList();
 const recipeList = new RecipeList(recipes);
 const ingredientsDropdown = new Dropdown(document.querySelector('#ingredients-dropdown'), 'Ingrédients');
@@ -14,7 +14,7 @@ const utensilsDropdown = new Dropdown(document.querySelector('#utensils-dropdown
 
 // Setup events on main search and filter dropdowns.
 mainSearch.onChange = (value) => {
-  if (value.length > 2) console.log(`Search by '${value}'`);
+  console.log(`Search by '${value}'`);
 };
 filterList.onAdd = (filter, newValue) => {
   console.log(`+ Filter added: ${filter.label}`, filter, newValue);
