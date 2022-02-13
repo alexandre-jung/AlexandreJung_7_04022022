@@ -16,6 +16,25 @@ const lib = path.resolve(js, 'lib');
 // Build directory.
 const outDir = path.resolve(`${root}/..`, 'dist');
 
+/**
+ * A Vite plugin to set HTTP headers so the document is isolated.
+ * This is required by Firefox to enable high-precision time measurement.
+ * 
+ * For more explanations, see:
+ * https://github.com/vitejs/vite/issues/3909#issuecomment-934044912
+ * https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
+ */
+const isolateDocument = {
+  name: 'configure-response-headers',
+  configureServer: (server) => {
+    server.middlewares.use((_req, res, next) => {
+      res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+      res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+      next();
+    });
+  },
+};
+
 export default {
   root,
   build: { outDir },
@@ -31,4 +50,5 @@ export default {
       lib,
     },
   },
+  plugins: [isolateDocument],
 };
