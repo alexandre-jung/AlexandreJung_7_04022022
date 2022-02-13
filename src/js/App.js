@@ -14,7 +14,11 @@ export default class App {
     this.setupEvents();
 
     this.currentSearchWords = App.searchStringToArray(this.mainSearch.value);
-    this.currentKeywords = [];
+    this.currentKeywords = {
+      [KEYWORD_TYPES.ingredient]: [],
+      [KEYWORD_TYPES.appliance]: [],
+      [KEYWORD_TYPES.utensil]: [],
+    };
 
     // Initialize search algorithm.
     Search.init(recipes);
