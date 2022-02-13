@@ -323,7 +323,7 @@ const recipes = [
         unit: 'grammes',
       },
       {
-        ingredient: 'Vinaigre Balsamic',
+        ingredient: 'Vinaigre balsamique',
       },
       {
         ingredient: "Huile d'olive",
@@ -334,7 +334,7 @@ const recipes = [
     ],
     time: 15,
     description:
-      "Peler le concombre le couper 2, retirer les pépins. Couper les olives en morceaux, ainsi que le fromage de chèvre. Ajouter le basilic ainsi que le vinaigre balsamic et l'huile d'olives à votre gout.",
+      "Peler le concombre le couper 2, retirer les pépins. Couper les olives en morceaux, ainsi que le fromage de chèvre. Ajouter le basilic ainsi que le vinaigre balsamique et l'huile d'olives à votre gout.",
     appliance: 'Saladier',
     utensils: ['cuillère en bois', 'couteau'],
   },
@@ -348,7 +348,7 @@ const recipes = [
         quantity: '1',
       },
       {
-        ingredient: 'Pommes de terre',
+        ingredient: 'pomme de terre',
         quantity: 4.5,
         unit: 'kg',
       },
@@ -395,7 +395,7 @@ const recipes = [
         unit: 'tranches',
       },
       {
-        ingredient: 'Pommes',
+        ingredient: 'pomme',
         quantity: 1,
       },
       {
@@ -425,7 +425,7 @@ const recipes = [
         unit: 'grammes',
       },
       {
-        ingredient: 'Pommes',
+        ingredient: 'pomme',
         quantity: 8,
       },
       {
@@ -456,7 +456,7 @@ const recipes = [
         unit: 'grammes',
       },
       {
-        ingredient: 'Pommes de terre',
+        ingredient: 'pomme de terre',
         quantity: 200,
         unit: 'grammes',
       },
@@ -684,7 +684,7 @@ const recipes = [
         quantity: 1,
       },
     ],
-    time: 0,
+    time: 8,
     description:
       "Coupez les fruits en morceaux, ajouter le jus de citron et le lait ainsi que le sucre glace. Mixez. Ajoutez des glaçons si le lait n'a pas été mis au frais.",
     appliance: 'Blender',
@@ -764,7 +764,7 @@ const recipes = [
     ],
     time: 30,
     description:
-      'Cuisiner la viande hachée dans une poële à frire. Dans une autre faire cuire les oignons découpés en fins dés avec un peu de beurre. Ajouter du vin rouge. Mélanger les oigons avec la viande hachée. Faire cuire les pates le temps indiqué sur le paquet. Ajouter le coulis de tomates à la viande hachée. Une fois que les pates sont cuites, ajouter la crème fraiche à la viande hachée. Serivir.',
+      'Cuisiner la viande hachée dans une poële à frire. Dans une autre faire cuire les oignons découpés en fins dés avec un peu de beurre. Ajouter du vin rouge. Mélanger les oigons avec la viande hachée. Faire cuire les pates le temps indiqué sur le paquet. Ajouter le coulis de tomate à la viande hachée. Une fois que les pates sont cuites, ajouter la crème fraiche à la viande hachée. Serivir.',
     appliance: 'casserole',
     utensils: ['Cuillère en bois', 'louche', 'couteau'],
   },
@@ -931,7 +931,7 @@ const recipes = [
         quantity: 6,
       },
       {
-        ingredient: 'Pommes de terre',
+        ingredient: 'pomme de terre',
         quantity: 1,
       },
       {
@@ -998,7 +998,7 @@ const recipes = [
         quantity: 3,
       },
       {
-        ingredient: 'Pommes de terre',
+        ingredient: 'pomme de terre',
         quantity: 400,
         unit: 'grammes',
       },
@@ -1092,7 +1092,7 @@ const recipes = [
         quantity: 2,
       },
       {
-        ingredient: 'Pommes de terre',
+        ingredient: 'pomme de terre',
         quantity: 2,
       },
       {
@@ -1234,7 +1234,7 @@ const recipes = [
         quantity: 6,
       },
       {
-        ingredient: 'Pommes de terre',
+        ingredient: 'pomme de terre',
         quantity: 1,
       },
       {
@@ -1328,7 +1328,7 @@ const recipes = [
         quantity: 1,
       },
       {
-        ingredient: 'Coulis de tomates',
+        ingredient: 'coulis de tomate',
         quantity: 20,
         unit: 'cl',
       },
@@ -1340,7 +1340,7 @@ const recipes = [
     ],
     time: 60,
     description:
-      "Couper les courgettes dans le sens de la longueur. Vider les courgette dans un saladier. Réserver.Faire revenir la chair des courgettes dans 25cl d'huile d'olive. Ajouter l'oignon puis la viande hachée. Mettre la farce dans les courgettes. Ajouter le coulis de tomates. Mettre au four pendant 30 minutes. Avant la fin de la cuisson ajouter le fromage rapé",
+      "Couper les courgettes dans le sens de la longueur. Vider les courgette dans un saladier. Réserver.Faire revenir la chair des courgettes dans 25cl d'huile d'olive. Ajouter l'oignon puis la viande hachée. Mettre la farce dans les courgettes. Ajouter le coulis de tomate. Mettre au four pendant 30 minutes. Avant la fin de la cuisson ajouter le fromage rapé",
     appliance: 'Four',
     utensils: ['couteau', 'cuillère en bois', 'Poële à frire'],
   },
@@ -1529,7 +1529,7 @@ const recipes = [
   },
   {
     id: 44,
-    name: 'Crème déssert au chocolat',
+    name: 'Crème dessert au chocolat',
     servings: 6,
     ingredients: [
       {
@@ -1634,7 +1634,7 @@ const recipes = [
     description:
       'Mélanger la farine avec le sucre et les oeufs en ajoutant du sucre vanillé. Ajouter le lait petit à petit. Ajouter un petit vers de rhum. Verser la masse dans un plat beurré y placer les pruneaux et faire cuire à 200° pendant 45 minutes',
     appliance: 'Four',
-    utensils: ['fouet', 'moule', 'verres'],
+    utensils: ['fouet', 'moule'],
   },
   {
     id: 47,
@@ -1710,11 +1710,11 @@ const recipes = [
     servings: 4,
     ingredients: [
       {
-        ingredient: 'Bananes',
+        ingredient: 'Banane',
         quantity: 2,
       },
       {
-        ingredient: 'Kiwis',
+        ingredient: 'Kiwi',
         quantity: 3,
       },
       {
@@ -1732,7 +1732,7 @@ const recipes = [
         unit: 'cuillères à soupe',
       },
     ],
-    time: 0,
+    time: 10,
     description:
       "Découper les fruits. Les passer au blender jusqu'à obtenir une texture liquide. Mettre au frais. Servir",
     appliance: 'Blender',
