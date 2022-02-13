@@ -138,17 +138,30 @@ export default class App {
      *
      * Return nothing.
      */
+    const startTime = performance.now();
     const recipeIds = Search.search(
       recipes,
       this.recipeList.filteredRecipes,
       this.currentSearchWords,
       this.currentKeywords
     );
+    const endTime = performance.now();
+
+    // Format and log execution time.
+    const ellapsedTime = endTime - startTime;
+    App.logTime('Filtering time', ellapsedTime);
+
     if (Array.isArray(recipeIds)) this.recipeList.filterByIds(recipeIds);
     else this.recipeList.clearFilter();
   }
 
   static searchStringToArray(str) {
     return str.split(' ').filter((v) => v);
+  }
+
+  static logTime(description, time) {
+    const formatter = new Intl.NumberFormat('en', { style: 'decimal' });
+    const formattedTime = formatter.format(time);
+    console.log(`${description}: ${formattedTime} ms`);
   }
 }
