@@ -98,10 +98,7 @@ export default class App {
       [KEYWORD_TYPES.appliance]: [],
       [KEYWORD_TYPES.utensil]: [],
     };
-    Array.from(keywordsMap.values()).reduce((accumulator, { key, type }) => {
-      accumulator[type].push(key);
-      return accumulator;
-    }, keywords);
+    Array.from(keywordsMap.values()).forEach(({ key, type }) => keywords[type].push(key));
 
     console.log(`Filter by '${keywords}'`, keywords);
     this.currentKeywords = keywords;
