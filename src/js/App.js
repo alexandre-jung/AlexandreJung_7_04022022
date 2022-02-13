@@ -100,7 +100,7 @@ export default class App {
     };
     Array.from(keywordsMap.values()).forEach(({ key, type }) => keywords[type].push(key));
 
-    console.log(`Filter by '${keywords}'`, keywords);
+    console.log(`Filter by '${JSON.stringify(keywords, null, 2)}'`);
     this.currentKeywords = keywords;
     this.applySearch();
   };
@@ -109,7 +109,6 @@ export default class App {
    * Update filters and dropdowns to match displayed recipes data.
    */
   updateFilters = (filteredRecipes) => {
-    console.log('filteredRecipes', filteredRecipes);
     // Get all keywords from currently displayed recipes.
     const { ingredients, appliances, utensils } = getKeywords(filteredRecipes);
     const filterRecipesKeywords = [...ingredients, ...appliances, ...utensils];
