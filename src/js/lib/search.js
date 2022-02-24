@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
+import RecipeIndex from './RecipeIndex.mjs';
 
 export default {
   /**
    * Initialize the search algorithm.
    */
   init(recipes) {
-    // Can be used to build any type of index(es) to speed up search.
-    // TODO initialize if needed.
+    this.index = new RecipeIndex(recipes);
   },
 
   /**
@@ -23,7 +23,16 @@ export default {
      *   utensils: key[],
      * },
      */
-    // TODO write search algorithm here.
+
+    // TODO write algorithm description.
+    if (
+      !search.length &&
+      !keywords.appliances.length &&
+      !keywords.utensils.length &&
+      !keywords.ingredients.length
+    )
+      return null;
+    return this.index.search({ search, keywords });
   },
 };
 
