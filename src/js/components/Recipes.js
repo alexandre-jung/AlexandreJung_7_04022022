@@ -43,10 +43,13 @@ export default class RecipeList {
   };
 
   clearFilter() {
+    let updated = false;
     for (const recipe of this.recipeContainer.children) {
+      updated = updated || recipe.classList.contains('hidden');
       recipe.classList.remove('hidden');
       this._filteredRecipes.add(Number(recipe.dataset.id));
     }
+    if (this.onChange && updated) this.onChange(this.filteredRecipes);
   }
 
   /**
