@@ -31,7 +31,7 @@ export default class App {
 
   /**
    * 1. Get DOM elements.
-   * 2. Create UI objects.
+   * 2. Initialize UI.
    * 3. Fill filter dropdowns.
    */
   setupUI() {
@@ -39,20 +39,23 @@ export default class App {
     const DomIngredientsDropdown = document.querySelector('#ingredients-dropdown');
     const DomAppliancesDropdown = document.querySelector('#appliances-dropdown');
     const DomUtensilsDropdown = document.querySelector('#utensils-dropdown');
+    this.emptySearchElement = document.querySelector('#empty-search');
 
-    // 2. Create UI objects.
+    // 2. Initialize UI.
     this.mainSearch = new SearchBar(3);
     this.filterList = new FilterList();
     this.recipeList = new RecipeList(recipes);
     this.ingredientsDropdown = new Dropdown(DomIngredientsDropdown, 'Ingrédients');
     this.appliancesDropdown = new Dropdown(DomAppliancesDropdown, 'Appareils');
     this.utensilsDropdown = new Dropdown(DomUtensilsDropdown, 'Ustensiles');
+    this.displayEmptyResults = false;
 
     // 3. Fill filter dropdowns.
     const { ingredients, appliances, utensils } = getKeywords(recipes);
     this.ingredientsDropdown.fill(ingredients);
     this.appliancesDropdown.fill(appliances);
     this.utensilsDropdown.fill(utensils);
+    
   }
 
   /**
@@ -123,7 +126,8 @@ export default class App {
   };
 
   /**
-   * Run the search algorithm, then display valid recipes.
+   * Run the search algorithm, then display valid recipes
+   * or a 'no results' message.
    */
   applySearch() {
     /**
@@ -152,6 +156,11 @@ export default class App {
 
     if (Array.isArray(recipeIds)) this.recipeList.filterByIds(recipeIds);
     else this.recipeList.clearFilter();
+    this.displayEmptyResults = !this.recipeList.filteredRecipes.length;
+  }
+
+  set displayEmptyResults(display) {
+    this.emptySearchElement.style.display = display ? 'block' : 'none';
   }
 
   static searchStringToArray(str) {
