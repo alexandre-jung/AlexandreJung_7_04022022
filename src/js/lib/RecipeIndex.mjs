@@ -1,18 +1,7 @@
-import { slugify } from '../utils/string.js';
-import { arrayIntersect } from '../utils/array.js';
-
-function compareString(a, b) {
-  return a < b ? -1 : a > b ? 1 : 0;
-}
-
-/**
- * Compares the string A with the beginning of B.
- * The return value has the same meaning as with String#localeCompare.
- */
-function compareStart(a, b) {
-  const _b = b.slice(0, a.length);
-  return a < _b ? -1 : a > _b ? 1 : 0;
-}
+import { slugify } from 'utils/string.js';
+import { arrayIntersect } from 'utils/array.js';
+import { mapListProxify } from 'utils/proxies';
+import { compareString, compareStringStart } from 'utils/string';
 
 export default class RecipeIndex {
   constructor(recipes, keywordMinLength = 1, exclude) {
@@ -65,8 +54,8 @@ export default class RecipeIndex {
       const middle = Math.floor((end - start) / 2) + start;
       const pivotItem = this.mainIndex[middle];
 
-      if (compareStart(keyword, pivotItem[0]) < 0) return _search(start, middle - 1);
-      else if (compareStart(keyword, pivotItem[0]) > 0) return _search(middle + 1, end);
+      if (compareStringStart(keyword, pivotItem[0]) < 0) return _search(start, middle - 1);
+      else if (compareStringStart(keyword, pivotItem[0]) > 0) return _search(middle + 1, end);
       return middle;
     };
 
@@ -77,7 +66,7 @@ export default class RecipeIndex {
     // Move backward until we find a non-matching item
     // or the start of the list.
     let firstIndex = matchIndex;
-    while (firstIndex >= 0 && compareStart(keyword, this.mainIndex[firstIndex][0]) == 0) {
+    while (firstIndex >= 0 && compareStringStart(keyword, this.mainIndex[firstIndex][0]) == 0) {
       firstIndex--;
     }
     // Replace index to the first matching item.
@@ -86,7 +75,7 @@ export default class RecipeIndex {
     // Move forward until we find a non-matching item
     // or the end of the list.
     let lastIndex = matchIndex;
-    while (lastIndex < this.mainIndex.length && compareStart(keyword, this.mainIndex[lastIndex][0]) == 0) {
+    while (lastIndex < this.mainIndex.length && compareStringStart(keyword, this.mainIndex[lastIndex][0]) == 0) {
       lastIndex++;
     }
 
@@ -95,52 +84,29 @@ export default class RecipeIndex {
 
   buildIndex(recipes, minLength, exclude) {
     const searchIndex = new Map();
+    const searchIndexProxy = mapListProxify(searchIndex, slugify);
+    const ingredientIndexProxy = mapListProxify(this.ingredientIndex, slugify);
+    const applianceIndexProxy = mapListProxify(this.applianceIndex, slugify);
+    const utensilIndexProxy = mapListProxify(this.utensilIndex, slugify);
+
     recipes.forEach((recipe) => {
       const recipeKeywords = RecipeIndex.extractKeywordsFromRecipe(recipe, this.regex);
       recipeKeywords.forEach((keyword) => {
         if (keyword.length < minLength || exclude.has(keyword)) return;
-
-        // TODO this can be factorized.
-        if (!searchIndex.has(keyword)) {
-          searchIndex.set(keyword, [recipe.id]);
-        } else {
-          searchIndex.get(keyword).push(recipe.id);
-        }
+        searchIndexProxy.append(keyword, recipe.id);
       });
 
-      // TODO this can be factorized.
-      const appliance = slugify(recipe.appliance);
-      if (!this.applianceIndex.has(appliance)) {
-        this.applianceIndex.set(appliance, [recipe.id]);
-      } else {
-        this.applianceIndex.get(appliance).push(recipe.id);
-      }
+      applianceIndexProxy.append(recipe.appliance, recipe.id);
 
-      // TODO this can be factorized.
       recipe.utensils.forEach((utensil) => {
-        const utensilSlug = slugify(utensil);
-        if (!this.utensilIndex.has(utensilSlug)) {
-          this.utensilIndex.set(utensilSlug, [recipe.id]);
-        } else {
-          this.utensilIndex.get(utensilSlug).push(recipe.id);
-        }
+        utensilIndexProxy.append(utensil, recipe.id);
       });
 
-      // TODO this can be factorized.
       recipe.ingredients.forEach(({ ingredient }) => {
-        const ingredientSlug = slugify(ingredient);
-        if (!this.ingredientIndex.has(ingredientSlug)) {
-          this.ingredientIndex.set(ingredientSlug, [recipe.id]);
-        } else {
-          this.ingredientIndex.get(ingredientSlug).push(recipe.id);
-        }
+        ingredientIndexProxy.append(ingredient, recipe.id);
       });
     });
     this.mainIndex = Array.from(searchIndex).sort(([a], [b]) => compareString(a, b));
-
-    // FIXME other index arrays are ordered because
-    // recipes are already ordered by ID, otherwise
-    // we should order them manually.
   }
 
   static extractKeywordsFromRecipe(recipe, regex) {
