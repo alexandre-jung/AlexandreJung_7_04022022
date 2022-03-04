@@ -107,9 +107,9 @@ export default class RecipeIndex {
       });
     });
     this.mainIndex = Array.from(searchIndex).sort(([a], [b]) => compareString(a, b));
-    this.applianceIndex.forEach((ids) => ids.sort());
-    this.utensilIndex.forEach((ids) => ids.sort());
-    this.ingredientIndex.forEach((ids) => ids.sort());
+    ingredientIndexProxy.sort();
+    applianceIndexProxy.sort();
+    utensilIndexProxy.sort();
   }
 
   static extractKeywordsFromRecipe(recipe, regex) {
