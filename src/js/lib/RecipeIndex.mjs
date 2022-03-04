@@ -22,19 +22,19 @@ export default class RecipeIndex {
         .sort((a, b) => a - b);
     });
 
-    const applianceMatch = appliances[0] && this.applianceIndex.get(appliances[0]).sort(compareString);
+    const applianceMatch = appliances[0] && this.applianceIndex.get(appliances[0]);
 
     // TODO this can be factorized.
     const ingredientMatches = ingredients.length
       ? ingredients.map((ingredient) => {
-          return this.ingredientIndex.get(ingredient).sort(compareString);
+          return this.ingredientIndex.get(ingredient);
         })
       : null;
 
     // TODO this can be factorized.
     const utensilMatches = utensils.length
       ? utensils.map((utensil) => {
-          return this.utensilIndex.get(utensil).sort(compareString);
+          return this.utensilIndex.get(utensil);
         })
       : null;
 
@@ -107,6 +107,9 @@ export default class RecipeIndex {
       });
     });
     this.mainIndex = Array.from(searchIndex).sort(([a], [b]) => compareString(a, b));
+    this.applianceIndex.forEach((ids) => ids.sort());
+    this.utensilIndex.forEach((ids) => ids.sort());
+    this.ingredientIndex.forEach((ids) => ids.sort());
   }
 
   static extractKeywordsFromRecipe(recipe, regex) {
