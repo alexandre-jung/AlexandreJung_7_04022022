@@ -27,6 +27,8 @@ export default class App {
     this.previousSearchWords = [];
     this.updateRecipesByMainSearch(this.mainSearch.value);
     this.previousSearchWords = this.currentSearchWords;
+
+    this.mainSearch.focus();
   }
 
   /**

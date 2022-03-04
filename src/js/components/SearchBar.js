@@ -23,4 +23,8 @@ export default class SearchBar {
     };
     this.searchInput.addEventListener('input', this._onChange);
   }
+
+  focus() {
+    this.searchInput.focus();
+  }
 }
