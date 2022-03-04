@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import RecipeIndex from './RecipeIndex.mjs';
+import RecipeIndex from './RecipeIndex';
 
 export default {
   /**

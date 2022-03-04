@@ -1,7 +1,11 @@
-import { slugify } from 'utils/string.js';
-import { arrayIntersect } from 'utils/array.js';
+import { slugify } from 'utils/string';
+import { arrayIntersect } from 'utils/array';
 import { mapListProxify } from 'utils/proxies';
 import { compareString, compareStringStart } from 'utils/string';
+
+function findMatches(indexMap, kwList) {
+  return kwList.length ? kwList.map((kw) => indexMap.get(kw)) : null;
+}
 
 export default class RecipeIndex {
   constructor(recipes, keywordMinLength = 1, exclude) {
@@ -12,6 +16,11 @@ export default class RecipeIndex {
     this.buildIndex(recipes, keywordMinLength, new Set(exclude));
   }
 
+  /**
+   * Return IDs of matching recipes in an array,
+   * or null of there is no match.
+   * @return {number[]|null} IDs
+   */
   search({ search, keywords: { appliances, utensils, ingredients } }) {
     const mainSearchMatches = search.map((word) => {
       const matchingEntries = this.findEntries(word);
@@ -23,20 +32,8 @@ export default class RecipeIndex {
     });
 
     const applianceMatch = appliances[0] && this.applianceIndex.get(appliances[0]);
-
-    // TODO this can be factorized.
-    const ingredientMatches = ingredients.length
-      ? ingredients.map((ingredient) => {
-          return this.ingredientIndex.get(ingredient);
-        })
-      : null;
-
-    // TODO this can be factorized.
-    const utensilMatches = utensils.length
-      ? utensils.map((utensil) => {
-          return this.utensilIndex.get(utensil);
-        })
-      : null;
+    const ingredientMatches = findMatches(this.ingredientIndex, ingredients);
+    const utensilMatches = findMatches(this.utensilIndex, utensils);
 
     const allMatchingIds = [];
     if (mainSearchMatches.length) allMatchingIds.push(...mainSearchMatches);
@@ -47,6 +44,14 @@ export default class RecipeIndex {
     return arrayIntersect(...allMatchingIds);
   }
 
+  /**
+   * Find recipes from keywords.
+   * A search word matches if it equals the start of a recipe keyword.
+   * All keywords must match either in name, ingredients
+   * or description for a recipe to match.
+   * Return a list of arrays where first element is the matched keyword,
+   * and the second is a list of recipes ID that contain that keyword.
+   */
   findEntries(keyword) {
     const _search = (start, end) => {
       if (start > end) return null;
