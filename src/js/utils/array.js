@@ -1,6 +1,6 @@
 export function arraysEqual(array1, array2) {
   if (array1.length != array2.length) return false;
-  for (let i = array1.length ; i >= 0 ; i --) {
+  for (let i = array1.length; i >= 0; i--) {
     if (array1[i] != array2[i]) return false;
   }
   return true;
@@ -33,10 +33,15 @@ export function arrayIntersect(...arrays) {
   const b = arrays.pop() ?? [];
 
   if (!Array.isArray(a) || !Array.isArray(b)) {
-    throw Error("Arguments must be any[], null or undefined");
+    throw Error('Arguments must be any[], null or undefined');
   }
 
-  if (arraysStartLength == 1) return a;
+  // Only one array -> deduplicate its values and return.
+  if (arraysStartLength == 1)
+    return a.reduce((accumulator, current) => {
+      if (current != accumulator[accumulator.length - 1]) accumulator.push(current);
+      return accumulator;
+    }, []);
 
   let result = [];
   let aIndex = 0;
