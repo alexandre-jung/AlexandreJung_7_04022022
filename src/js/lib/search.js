@@ -23,7 +23,6 @@ export default {
    */
   init(recipes) {
     // Can be used to build any type of index(es) to speed up search.
-    // TODO initialize if needed.
   },
 
   /**
@@ -40,7 +39,6 @@ export default {
      *   utensils: key[],
      * },
      */
-    // TODO write search algorithm here.
 
     /**
      * Algorithm:
@@ -63,31 +61,57 @@ export default {
      * This allows to keep all recipes when there is no search or keywords.
      */
 
-    return recipes
-      .filter(({ name, description, ingredients, appliance, utensils }) => {
-        return (
-          search
-            .map((searchWord) => {
-              return (
-                normalizedContains(searchWord, name) ||
-                normalizedContains(searchWord, ingredients.map(({ ingredient }) => ingredient).join(' ')) ||
-                normalizedContains(searchWord, description)
-              );
-            })
-            .every((v) => v) &&
-          keywords.ingredients
-            .map((ingredient) =>
-              normalizedArrayIncludes(
-                ingredient,
-                ingredients.map(({ ingredient }) => ingredient)
-              )
-            )
-            .every((v) => v) &&
-          keywords.appliances.map((_appliance) => normalizedEquals(_appliance, appliance)).every((v) => v) &&
-          keywords.utensils.map((utensil) => normalizedArrayIncludes(utensil, utensils)).every((v) => v)
-        );
-      })
-      .map(({ id }) => id);
+    let matchingRecipes = [];
+
+    recipeLoop: for (const currentRecipe of recipes) {
+      let recipeIngredientsAsString = '';
+
+      for (const ingredient of currentRecipe.ingredients) {
+        recipeIngredientsAsString += ingredient.ingredient + ' ';
+      }
+
+      for (const searchWord of search) {
+        if (
+          normalizedContains(searchWord, currentRecipe.name) ||
+          normalizedContains(searchWord, currentRecipe.description) ||
+          normalizedContains(searchWord, recipeIngredientsAsString)
+        )
+          continue;
+        continue recipeLoop;
+      }
+
+      const {
+        ingredients: searchIngredients,
+        appliances: searchAppliances,
+        utensils: searchUtensils,
+      } = keywords;
+
+      const recipeIngredientsNames = [];
+      for (const ingredient of currentRecipe.ingredients) {
+        recipeIngredientsNames.push(ingredient.ingredient);
+      }
+
+      for (const searchIngredient of searchIngredients) {
+        if (normalizedArrayIncludes(searchIngredient, recipeIngredientsNames))
+          continue;
+        continue recipeLoop;
+      }
+
+      for (const searchUtensil of searchUtensils) {
+        if (normalizedArrayIncludes(searchUtensil, currentRecipe.utensils))
+          continue;
+        continue recipeLoop;
+      }
+
+      for (const searchAppliance of searchAppliances) {
+        if (normalizedEquals(searchAppliance, currentRecipe.appliance))
+          continue;
+        continue recipeLoop;
+      }
+
+      matchingRecipes.push(currentRecipe.id);
+    }
+    return matchingRecipes;
   },
 };
 
